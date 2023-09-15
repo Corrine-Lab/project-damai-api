@@ -11,16 +11,18 @@ import { fetchShowsClubs } from './show.js';
 import { fetchClubsManager } from './club.js';
 
 const fetchUserInfo = async ( req, res ) => {
-  try {
+  // try {
+    console.log(req.userId)
     const user = await User.findById( req.userId );
     let followings, clubs;
 
-    if ( user.role === 'comedian' ) {
-      followings = await ComedianFollowing.find( { comedianId: req.userId } );
-    } else if ( user.role === 'holder' ) {
-      clubs = await Club.find( { userId: req.userId } );
-      followings = await ClubFollowing.find( { clubId: clubs[0]._id } );
-    }
+    // if ( user.role === 'comedian' ) {
+    //   followings = await ComedianFollowing.find( { comedianId: req.userId } );
+    // } else if ( user.role === 'holder' ) {
+    //   clubs = await Club.find( { userId: req.userId } );
+    //   console.log(clubs)
+    //   followings = await ClubFollowing.find( { clubId: clubs[0]._id } );
+    // }
 
     const newUser = {
       id: user._id,
@@ -29,13 +31,13 @@ const fetchUserInfo = async ( req, res ) => {
       avatar: user.avatar,
       slogan: user.slogan,
       experience: user.experience,
-      club: clubs[0],
+      // club: clubs[0],
       followings
     };
     res.status( 200 ).json( { success: true, data: newUser } );
-  } catch (error) {
-    res.status( 500 ).send( error );
-  }
+  // } catch (error) {
+  //   res.status( 500 ).send( error );
+  // }
 };
 
 const fetchComedianInfo = async ( req, res ) => {
